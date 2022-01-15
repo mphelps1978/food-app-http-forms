@@ -16,6 +16,11 @@
   color: #fff
 }
 
+.loadingError {
+  text-align: center;
+  color: #ff0000
+}
+
 @keyframes meals-appear {
   from {
     opacity: 0;

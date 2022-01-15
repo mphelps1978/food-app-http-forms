@@ -6,12 +6,16 @@ import classes from "./AvailableMeals.module.css";
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
 
   useEffect(() => {
     const fetchMeals = async () => {
       const response = await fetch(
         "https://react-http-practice-4cba1-default-rtdb.firebaseio.com/meals.json"
       );
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
       const responseData = await response.json();
       const loadedMeals = [];
       for (const key in responseData) {
@@ -25,7 +29,11 @@ const AvailableMeals = () => {
       setMeals(loadedMeals);
       setLoading(false);
     };
-    fetchMeals();
+
+    fetchMeals().catch((error) => {
+      setLoading(false);
+      setError(error.message);
+    });
   }, []);
 
   const mealsList = meals.map((meal) => (
@@ -41,11 +49,17 @@ const AvailableMeals = () => {
   if (loading) {
     return (
       <section className={classes.mealsLoading}>
-        <p>Loading..</p>
+        <p>Loading...</p>
       </section>
     );
   }
-
+  if (error) {
+    return (
+      <section className={classes.loadingError}>
+        <p>{error}</p>
+      </section>
+    );
+  }
   return (
     <section className={classes.meals}>
       <Card>
