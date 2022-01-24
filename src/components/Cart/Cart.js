@@ -41,7 +41,15 @@ const Cart = (props) => {
   };
   
   const submitOrderHandler = (userData) => {
-    
+    console.log('sending via fetch')
+    fetch('https://react-http-practice-4cba1-default-rtdb.firebaseio.com/order.json', {
+      method: 'POST',
+      body: JSON.stringify({
+        user: userData,
+        items: cartCtx.items
+        
+      })
+    })    
   }
 
   const modalActions = (

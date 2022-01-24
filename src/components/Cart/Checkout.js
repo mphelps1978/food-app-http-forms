@@ -46,6 +46,7 @@ const Checkout = (props) => {
       // error stuff
       return;
     }
+    console.log('sending order data to parent')
     props.onConfirm({
       name: enteredName,
       street: enteredStreet,
